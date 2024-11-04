@@ -1,7 +1,21 @@
 body {
   font-family: sans-serif;
   color: #666;
-  background-color: #f1f1f1;
+  background-color: #e9ffc9;
   font-size: x-large;
   margin: 1em;
+  display: flex;
+  flex-direction: row;
+}
+
+aside {
+  background-color: rgb(249, 188, 188);
+  width: 20rem;
+  height: 93vh;
+}
+
+section {
+  background-color: rgb(98, 176, 135);
+  width: 20rem;
+  height: 20vh;
 }

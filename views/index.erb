@@ -3,10 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projekt #2</title>
+    <title>Todoodle</title>
     <link rel="stylesheet" type="text/css" href="/style.css?<%=Time.now.to_i%>">
 </head>
 <body>
-  <img src="/img/glhf.png">
+	<aside>
+		<h2>Ny todo!</h2>
+		<form action="/todo/add" method="post">
+			<input type="text" name="name" placeholder="Listans namn">
+			<input type="text" name="description" placeholder="Beskrivning">
+			<button type="submit">Spara</button>
+		</form>
+	</aside>
+	<section class="todo">
+
+	</section>
 </body>
 </html>
