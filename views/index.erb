@@ -7,16 +7,26 @@
     <link rel="stylesheet" type="text/css" href="/style.css?<%=Time.now.to_i%>">
 </head>
 <body>
+
 	<aside>
 		<h2>Ny todo!</h2>
+
 		<form action="/todo/add" method="post">
 			<input type="text" name="name" placeholder="Listans namn">
 			<input type="text" name="description" placeholder="Beskrivning">
 			<button type="submit">Spara</button>
 		</form>
 	</aside>
-	<section class="todo">
 
-	</section>
+	<div id="todo-list">
+		<% @todos.each do |todo| %>
+			<div class="card">
+				<h2><%= todo['name'] %></h2>
+
+				<p><%= todo['description'] %></p>
+			</div>
+		<% end %>
+	</div>
+
 </body>
 </html>
