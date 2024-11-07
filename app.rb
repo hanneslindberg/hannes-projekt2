@@ -10,10 +10,6 @@ class App < Sinatra::Base
 	end
 
 	get '/' do
-		erb(:"index")
-	end
-
-	get '/' do
 		@todos = db.execute('SELECT * FROM todos')
 		erb(:"index")
 	end
@@ -27,4 +23,10 @@ class App < Sinatra::Base
 		redirect '/'
 	end
 
+	post '/todo/:id/delete' do | id |
+		db.execute("DELETE FROM todos WHERE id =?", id)
+
+		redirect("/")
+	end
 end
+

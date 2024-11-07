@@ -19,12 +19,21 @@
 	</aside>
 
 	<div id="todo-list">
-		<% @todos.each do |todo| %>
-			<div class="card">
-				<h2><%= todo['name'] %></h2>
+		<% if @todos %>
+			<% @todos.each do |todo| %>
+				<div class="card">
+					<h2><%= todo['name'] %></h2>
 
-				<p><%= todo['description'] %></p>
-			</div>
+					<p><%= todo['description'] %></p>
+					<div>
+						<form class="delete" action="/todo/<%=todo["id"]%>/delete" method="post">
+							<input type="submit" value="Ta bort">
+						</form> 
+						
+						<a class="edit" href="/todo/<%=todo["id"]%>/edit">Ändra</a>
+					</div>
+				</div>
+			<% end %>
 		<% end %>
 	</div>
 

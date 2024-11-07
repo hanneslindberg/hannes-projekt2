@@ -1,21 +1,35 @@
 body {
+  margin: 0px;
+  padding: 0px;
+
   font-family: sans-serif;
   color: #666;
-  background-color: #e9ffc9;
+  background-color: white;
   font-size: x-large;
-  margin: 1em;
+
   display: flex;
   flex-direction: row;
 }
 
 aside {
-  background-color: rgb(249, 188, 188);
+  margin-right: 3rem;
+  padding: 1rem;
+
+
+  background-color: rgb(0, 0, 0);
   width: 20rem;
-  height: 93vh;
+  height: 100vh;
 }
 
-section {
-  background-color: rgb(98, 176, 135);
+.card {
   width: 20rem;
-  height: 20vh;
+  height: auto;
+
+  margin: 2rem;
+  padding: 10px;
+
+  border: solid black;
+  border-radius: 1rem;
+
+  color: black;
 }
