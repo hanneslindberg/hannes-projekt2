@@ -15,7 +15,6 @@ class App < Sinatra::Base
 	end
 
 	post '/todo/add' do 
-
 		name = params["name"]
 		description = params["description"]
 
@@ -27,6 +26,23 @@ class App < Sinatra::Base
 		db.execute("DELETE FROM todos WHERE id =?", id)
 
 		redirect("/")
+	end
+
+	get '/todo/:id/edit' do | id |
+		# todo: Hämta info (från databasen) om frukten med id'
+		db.execute("SELECT * FROM todos WHERE id =?", id)
+
+		# todo: Visa infon i fruits/edit.erb
+		erb(:"/edit")
+	end
+
+	# Routen sparar ändringarna från formuläret
+	post "/todo/:id/update" do | id |
+		# todo: Läs name & category från formuläret
+		
+		# todo: Kör SQL för att uppdatera datan från formuläret
+		
+		# todo: Redirect till /fruits
 	end
 end
 

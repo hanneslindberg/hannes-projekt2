@@ -26,11 +26,11 @@
 
 					<p><%= todo['description'] %></p>
 					<div>
-						<form class="delete" action="/todo/<%=todo["id"]%>/delete" method="post">
+						<form class="delete" action="/todo/<%= todo["id"] %>/delete" method="post">
 							<input type="submit" value="Ta bort">
 						</form> 
 						
-						<a class="edit" href="/todo/<%=todo["id"]%>/edit">Ändra</a>
+						<a class="edit" href="/todo/<%= todo["id"] %>/edit">Ändra</a>
 					</div>
 				</div>
 			<% end %>
