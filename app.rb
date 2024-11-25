@@ -1,5 +1,7 @@
-class App < Sinatra::Base
+require 'sinatra'
+require 'securerandom'
 
+class App < Sinatra::Base
 	def db
 		return @db if @db
 
@@ -9,40 +11,110 @@ class App < Sinatra::Base
 		return @db
 	end
 
-	get '/' do
-		@todos = db.execute('SELECT * FROM todos')
-		erb(:"index")
+	configure do
+    enable :sessions
+    set :session_secret, SecureRandom.hex(64)
+  end
+
+  get '/' do
+    if session[:user_id]
+      erb(:"admin/index")
+    else
+      erb :index
+    end
+  end
+
+	post '/testpwcreate' do
+    plain_password = params[:plainpassword]
+    password_hashed = BCrypt::Password.create(plain_password)
+    p password_hashed
+  end
+
+  get '/admin' do
+    if session[:user_id]
+      erb(:"admin/index")
+    else
+      p "/admin : Access denied."
+      status 401
+      redirect '/unauthorized'
+    end
+  end
+
+	post '/login' do
+		request_username = params[:username]
+    request_plain_password = params[:password]
+
+    user = db.execute("SELECT * FROM users WHERE username = ?", request_username).first
+
+    unless user
+      p "/login : Invalid username."
+      status 401
+      redirect '/unauthorized'
+    end
+
+    db_id = user["id"].to_i
+    db_password_hashed = user["password"].to_s
+		p db_id
+
+    bcrypt_db_password = BCrypt::Password.new(db_password_hashed)
+
+    if bcrypt_db_password == request_plain_password
+      p "/login : Logged in -> redirecting to admin"
+      session[:user_id] = db_id
+			@todos = 
+      redirect '/todos'
+    else
+      p "/login : Invalid password."
+      status 401
+      redirect '/unauthorized'
+    end
 	end
 
-	post '/todo/add' do 
+	get '/unauthorized' do
+    erb(:unauthorized)
+  end
+
+	get '/logout' do
+    p "/logout : Logging out"
+    session.clear
+    redirect '/'
+  end
+
+	get '/todos' do 
+		@todos = db.execute('SELECT * FROM todos')
+		p @todos.class
+		p @todos
+
+		erb(:"admin/index")
+	end
+
+	post '/todos' do
 		name = params["name"]
 		description = params["description"]
 
-		db.execute("INSERT INTO todos (name, description) VALUES(?,?)", [name, description])
-		redirect '/'
+		db.execute("INSERT INTO todos (name, description, user_id) VALUES(?, ?, ?)", [name, description, session[:user_id]])
+		redirect '/todos'
 	end
 
-	post '/todo/:id/delete' do | id |
+	post '/todos/:id/delete' do | id |
 		db.execute("DELETE FROM todos WHERE id =?", id)
 
-		redirect("/")
+		redirect("/todos")
 	end
 
-	get '/todo/:id/edit' do | id |
-		# todo: Hämta info (från databasen) om frukten med id'
-		db.execute("SELECT * FROM todos WHERE id =?", id)
+	get '/todos/:id/edit' do | id |
+		@todo = db.execute("SELECT * FROM todos WHERE id =?", id).first
 
-		# todo: Visa infon i fruits/edit.erb
-		erb(:"/edit")
+		erb(:"edit")
 	end
 
-	# Routen sparar ändringarna från formuläret
-	post "/todo/:id/update" do | id |
-		# todo: Läs name & category från formuläret
+	post "/todos/:id/update" do | id |
+		name = params['name']
+		description = params['description']
+		query = "UPDATE todos SET name = ?, description = ? WHERE id=?"
 		
-		# todo: Kör SQL för att uppdatera datan från formuläret
+		db.execute(query, [name, description, id])
 		
-		# todo: Redirect till /fruits
+		redirect("/todos")
 	end
 end
-

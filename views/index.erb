@@ -7,35 +7,15 @@
     <link rel="stylesheet" type="text/css" href="/style.css?<%=Time.now.to_i%>">
 </head>
 <body>
+    <div id="login-card">
+        <form action="/login" method="POST">
+            <input type="text" name="username" id="username" placeholder="Användarnamn" required></label>
 
-	<aside>
-		<h2>Ny todo!</h2>
+            <input type="password"  name="password" id="password" placeholder="Lösenord" required></label>
 
-		<form action="/todo/add" method="post">
-			<input type="text" name="name" placeholder="Listans namn">
-			<input type="text" name="description" placeholder="Beskrivning">
-			<button type="submit">Spara</button>
-		</form>
-	</aside>
-
-	<div id="todo-list">
-		<% if @todos %>
-			<% @todos.each do |todo| %>
-				<div class="card">
-					<h2><%= todo['name'] %></h2>
-
-					<p><%= todo['description'] %></p>
-					<div>
-						<form class="delete" action="/todo/<%= todo["id"] %>/delete" method="post">
-							<input type="submit" value="Ta bort">
-						</form> 
-						
-						<a class="edit" href="/todo/<%= todo["id"] %>/edit">Ändra</a>
-					</div>
-				</div>
-			<% end %>
-		<% end %>
-	</div>
-
+            <button type="submit">Login</button>
+        </form>
+    </div>
+    
 </body>
 </html>

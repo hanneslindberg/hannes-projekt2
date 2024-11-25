@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todoodle</title>
+    <link rel="stylesheet" type="text/css" href="/style.css?<%=Time.now.to_i%>">
+</head>
+<body>	
+	<main>
+		<aside>
+			<h2>Ny todo!</h2>
+
+			<form action="/todos" method="post">
+				<input type="text" name="name" placeholder="Listans namn">
+				<input type="text" name="description" placeholder="Beskrivning">
+				<button type="submit">Spara</button>
+			</form>
+
+			<a href="/logout">
+				<h2>Logga ut</h2>
+			</a>
+		</aside>
+
+		<div id="todo-list">
+			<% if @todos %>
+				<% @todos.each do |todo| %>
+					<% if todo["user_id"] == session[:user_id] %>
+						<div class="card">
+							<h2><%= todo['name'] %></h2>
+							<p><%= todo['description'] %></p>
+
+							<div>
+								<form class="delete" action="/todos/<%= todo["id"] %>/delete" method="post">
+									<input type="submit" value="Ta bort">
+								</form> 
+								
+								<a class="edit" href="/todos/<%= todo["id"] %>/edit">Ändra</a>
+							</div>
+						</div>
+					<% end %>
+				<% end %>
+			<% end %>
+		</div>
+	</main>
+</body>
+</html>
