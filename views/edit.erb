@@ -7,11 +7,13 @@
     <link rel="stylesheet" type="text/css" href="/style.css?<%=Time.now.to_i%>">
 </head>
 <body>
-    <h1>Ändra</h1>
+    
     
     <form action="/todos/<%= @todo["id"] %>/update" method = "post">
-        <input type="text" name="name" placeholder="Nytt namn">
-        <input type="text" name="description" placeholder="Ny beskrivning">
+        <h1>Ändra:</h1>
+
+        <input type="text" value="<%= @todo["name"] %>" name="name">
+        <input type="text" value="<%= @todo["description"] %>" name="description">
         <button type="submit">Spara</button>
     </form>
 </body>

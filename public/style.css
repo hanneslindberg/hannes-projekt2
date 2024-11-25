@@ -1,53 +1,252 @@
-body {
-  margin: 0px;
-  padding: 0px;
-
-  font-family: sans-serif;
-  color: #666;
-  background-color: white;
-  font-size: x-large;
-
-  display: flex;
-  flex-direction: column;
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-#login-card {
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f9;
+  color: #333;
   display: flex;
   justify-content: center;
-
-  margin-top: 40vh;
-
-  background-color: rgb(24, 24, 24);
+  align-items: center;
+  height: 100vh;
+  margin: 0;
 }
 
-header {
-  background-color: black;
-  color:white;
+/* Login Card */
+#login-card {
+  background: #fff;
+  padding: 20px 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
 }
 
+#login-card h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #4a90e2;
+}
+
+/* Form Fields */
+#login-card input[type="text"],
+#login-card input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  transition: border-color 0.3s;
+}
+
+#login-card input[type="text"]:focus,
+#login-card input[type="password"]:focus {
+  border-color: #4a90e2;
+  outline: none;
+}
+
+/* Button */
+#login-card button {
+  background-color: #4a90e2;
+  color: white;
+  font-size: 16px;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 100%;
+}
+
+#login-card button:hover {
+  background-color: #357abd;
+}
+
+/* Main Layout */
 main {
   display: flex;
-  flex-direction: row;
+  gap: 20px;
+  width: 100%;
+  max-width: 1200px;
 }
 
+/* Sidebar */
 aside {
-  margin-right: 3rem;
-  padding: 1rem;
-
-  background-color: rgb(23, 23, 23);
-  width: 20rem;
-  height: 100vh;
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 300px;
 }
 
-.card {
-  width: 20rem;
-  height: auto;
+aside h2 {
+  font-size: 20px;
+  margin-bottom: 15px;
+  color: #4a90e2;
+}
 
-  margin: 2rem;
+aside form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+aside input[type="text"] {
   padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  transition: border-color 0.3s;
+}
 
-  border: solid black;
-  border-radius: 1rem;
+aside input[type="text"]:focus {
+  border-color: #4a90e2;
+  outline: none;
+}
 
-  color: black;
+aside button {
+  background-color: #4a90e2;
+  color: white;
+  font-size: 16px;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+aside button:hover {
+  background-color: #357abd;
+}
+
+aside a {
+  display: block;
+  margin-top: 20px;
+  text-align: center;
+  text-decoration: none;
+  color: #4a90e2;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+aside a:hover {
+  color: #357abd;
+}
+
+/* Todo List */
+#todo-list {
+  flex: 1;
+  display: flex;
+  gap: 20px;
+}
+
+/* Todo Card */
+.card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 300px;
+}
+
+.card h2 {
+  font-size: 18px;
+  color: #4a90e2;
+  margin-bottom: 10px;
+}
+
+.card p {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+#delete-edit {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card .delete input[type="submit"] {
+  background-color: #e74c3c;
+  color: white;
+  font-size: 14px;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.card .delete input[type="submit"]:hover {
+  background-color: #c0392b;
+}
+
+.card .edit {
+  color: #4a90e2;
+  text-decoration: none;
+  margin-top: 20px;
+  font-size: 14px;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+.card .edit:hover {
+  color: #357abd;
+}
+
+/* Header */
+h1 {
+    font-size: 24px;
+    color: #4a90e2;
+    margin-bottom: 20px;
+}
+
+/* Form */
+form {
+    background: #fff;
+    padding: 20px 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+form input[type="text"] {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: border-color 0.3s;
+}
+
+form input[type="text"]:focus {
+    border-color: #4a90e2;
+    outline: none;
+}
+
+form button {
+    background-color: #4a90e2;
+    color: white;
+    font-size: 16px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+form button:hover {
+    background-color: #357abd;
 }

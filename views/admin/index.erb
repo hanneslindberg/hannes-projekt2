@@ -18,7 +18,7 @@
 			</form>
 
 			<a href="/logout">
-				<h2>Logga ut</h2>
+				<p>Logga ut</p>
 			</a>
 		</aside>
 
@@ -30,7 +30,7 @@
 							<h2><%= todo['name'] %></h2>
 							<p><%= todo['description'] %></p>
 
-							<div>
+							<div id="delete-edit">
 								<form class="delete" action="/todos/<%= todo["id"] %>/delete" method="post">
 									<input type="submit" value="Ta bort">
 								</form> 
