@@ -24,12 +24,6 @@ class App < Sinatra::Base
     end
   end
 
-	post '/testpwcreate' do
-    plain_password = params[:plainpassword]
-    password_hashed = BCrypt::Password.create(plain_password)
-    p password_hashed
-  end
-
   get '/admin' do
     if session[:user_id]
       erb(:"admin/index")
@@ -54,7 +48,6 @@ class App < Sinatra::Base
 
     db_id = user["id"].to_i
     db_password_hashed = user["password"].to_s
-		p db_id
 
     bcrypt_db_password = BCrypt::Password.new(db_password_hashed)
 
@@ -75,15 +68,13 @@ class App < Sinatra::Base
   end
 
 	get '/logout' do
-    p "/logout : Logging out"
     session.clear
     redirect '/'
   end
 
-	get '/todos' do 
+	get '/todos' do
 		@todos = db.execute('SELECT * FROM todos')
-		p @todos.class
-		p @todos
+		@users = db.execute('SELECT * FROM users WHERE id = ?', 1).first
 
 		erb(:"admin/index")
 	end
