@@ -1,6 +1,3 @@
-require 'sinatra'
-require 'securerandom'
-
 class App < Sinatra::Base
 	def db
 		return @db if @db
@@ -20,7 +17,7 @@ class App < Sinatra::Base
     if session[:user_id]
       erb(:"admin/index")
     else
-      erb :index
+      erb(:"index")
     end
   end
 
@@ -28,7 +25,6 @@ class App < Sinatra::Base
     if session[:user_id]
       erb(:"admin/index")
     else
-      p "/admin : Access denied."
       status 401
       redirect '/unauthorized'
     end
@@ -41,23 +37,18 @@ class App < Sinatra::Base
     user = db.execute("SELECT * FROM users WHERE username = ?", request_username).first
 
     unless user
-      p "/login : Invalid username."
       status 401
       redirect '/unauthorized'
     end
 
-    db_id = user["id"].to_i
     db_password_hashed = user["password"].to_s
-
     bcrypt_db_password = BCrypt::Password.new(db_password_hashed)
 
     if bcrypt_db_password == request_plain_password
-      p "/login : Logged in -> redirecting to admin"
-      session[:user_id] = db_id
+      session[:user_id] = user["id"].to_i
 			@todos = 
       redirect '/todos'
     else
-      p "/login : Invalid password."
       status 401
       redirect '/unauthorized'
     end

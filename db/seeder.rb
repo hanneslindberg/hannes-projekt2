@@ -28,6 +28,7 @@ class Seeder
   def self.populate_tables
     password_hashed1 = BCrypt::Password.create("123")
     password_hashed2 = BCrypt::Password.create("456")
+
     db.execute('INSERT INTO users (username, password) VALUES (?, ?)', ["Hannsken", password_hashed1])
     db.execute('INSERT INTO users (username, password) VALUES (?, ?)', ["Hannes", password_hashed2])
   end
