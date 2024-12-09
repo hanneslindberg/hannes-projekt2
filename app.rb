@@ -63,9 +63,25 @@ class App < Sinatra::Base
     redirect '/'
   end
 
+  get '/create_account' do
+    erb(:create_account)
+  end
+
+  post '/create_account' do
+    username = params[:username]
+    password = BCrypt::Password.create(params[:password])
+
+    db.execute("INSERT INTO users (username, password) VALUES(?, ?)", [username, password])
+
+    user = db.execute("SELECT * FROM users WHERE username = ?", username).first
+    session[:user_id] = user["id"].to_i
+
+    redirect '/todos'
+  end
+
 	get '/todos' do
 		@todos = db.execute('SELECT * FROM todos')
-		@users = db.execute('SELECT * FROM users WHERE id = ?', 1).first
+		@user = db.execute('SELECT * FROM users WHERE id = ?', session[:user_id]).first
 
 		erb(:"admin/index")
 	end
