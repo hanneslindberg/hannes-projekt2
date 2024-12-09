@@ -31,7 +31,7 @@ class App < Sinatra::Base
   end
 
 	post '/login' do
-		request_username = params[:username]
+    request_username = params[:username]
     request_plain_password = params[:password]
 
     user = db.execute("SELECT * FROM users WHERE username = ?", request_username).first
@@ -68,12 +68,20 @@ class App < Sinatra::Base
   end
 
   post '/create_account' do
-    username = params[:username]
-    password = BCrypt::Password.create(params[:password])
+    form_username = params[:username]
+    form_password = BCrypt::Password.create(params[:password])
 
-    db.execute("INSERT INTO users (username, password) VALUES(?, ?)", [username, password])
+    all_usernames = db.execute('SELECT username FROM users')
 
-    user = db.execute("SELECT * FROM users WHERE username = ?", username).first
+    all_usernames.each do | user |
+      if user['username'] == form_username
+        redirect '/unauthorized'
+      end
+    end
+
+    db.execute("INSERT INTO users (username, password) VALUES(?, ?)", [form_username, form_password])
+
+    user = db.execute("SELECT * FROM users WHERE username = ?", form_username).first
     session[:user_id] = user["id"].to_i
 
     redirect '/todos'
